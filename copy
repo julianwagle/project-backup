@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# to be run from one dir back
+# i.e. if you are @ project/ dir
+# & this is @ project/scripts/copy.sh
+# then run `bash scripts/copy.sh`
+# NOT `cd scripts; bash copy.sh`
+# && DONT store @ project/copy.sh
+
+DATE=$(date +"%b-%d-%H%M")
+source_path=$( cd "$(dirname "$1")" ; pwd -P )
+dest_path="$source_path-$DATE"
+cd "../"
+rsync -avz --exclude-from=$source_path/exclude-copy.txt "$source_path" $dest_path
